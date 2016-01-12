@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:weightSum="1"
+    android:orientation="horizontal"
+    android:background="@color/blue"
+    android:id="@+id/GameLayout">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/nickGracza"
+        android:textSize="30sp"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"/>
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/gridLayout"
+        android:background="@color/white"
+        android:columnCount="5"
+        android:rowCount="5"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_height="55dp"
+            android:layout_width="55dp"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:visibility="invisible"
+            android:onClick="drawItem"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"
+            />
+
+        <ImageButton
+            android:id="@+id/b"
+            android:layout_height="55dp"
+            android:layout_width="55dp"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:visibility="invisible"
+            android:onClick="drawItem"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"
+                />
+        <ImageButton
+            android:id="@+id/c"
+            android:layout_height="55dp"
+            android:layout_width="55dp"
+            android:layout_row="0"
+            android:layout_column="2"
+            android:visibility="invisible"
+            android:onClick="drawItem"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"
+                />
+        <ImageButton
+            android:id="@+id/d"
+            android:layout_height="55dp"
+            android:layout_width="55dp"
+            android:layout_row="0"
+            android:layout_column="3"
+            android:visibility="invisible"
+            android:onClick="drawItem"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"
+                />
+        <ImageButton
+            android:id="@+id/e"
+            android:layout_height="55dp"
+            android:layout_width="55dp"
+            android:layout_row="0"
+            android:layout_column="4"
+            android:visibility="invisible"
+            android:onClick="drawItem"
+            android:layout_marginBottom="5dp"
+                />
+
+        <ImageButton
+            android:id="@+id/a"
+            android:layout_height="55dp"
+            android:layout_width="55dp"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:visibility="invisible"
+            android:onClick="drawItem"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"
+            />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_height="55dp"
+            android:layout_width="55dp"
+            android:layout_row="1"
+            android:layout_column="1"
+            android:visibility="invisible"
+            android:onClick="drawItem"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"/>
+
+        <ImageButton
+            android:id="@+id/imageButton3"
+            android:layout_height="55dp"
+            android:layout_width="55dp"
+            android:layout_row="1"
+            android:layout_column="2"
+            android:visibility="invisible"
+            android:onClick="drawItem"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp" />
+
+        <ImageButton
+            android:id="@+id/imageButton4"
+            android:layout_height="55dp"
+            android:layout_width="55dp"
+            android:layout_row="1"
+            android:layout_column="3"
+            android:visibility="invisible"
+            android:onClick="drawItem"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp" />
+
+        <ImageButton
+            android:id="@+id/imageButton5"
+            android:layout_height="55dp"
+            android:layout_width="55dp"
+            android:layout_row="1"
+            android:layout_column="4"
+            android:visibility="invisible"
+            android:onClick="drawItem"
+            android:layout_marginBottom="5dp"
+           />
+
+        <ImageButton
+            android:id="@+id/imageButton36"
+            android:layout_height="55dp"
+            android:layout_width="55dp"
+            android:layout_row="2"
+            android:layout_column="0"
+            android:visibility="invisible"
+            android:onClick="drawItem"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"/>
+
+        <ImageButton
+            android:id="@+id/imageButton37"
+            android:layout_height="55dp"
+            android:layout_width="55dp"
+            android:layout_row="2"
+            android:layout_column="1"
+            android:visibility="invisible"
+            android:onClick="drawItem"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"/>
+
+        <ImageButton
+            android:id="@+id/imageButton38"
+            android:layout_height="55dp"
+            android:layout_width="55dp"
+            android:layout_row="2"
+            android:layout_column="2"
+            android:visibility="invisible"
+            android:onClick="drawItem"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"/>
+
+        <ImageButton
+            android:id="@+id/imageButton39"
+            android:layout_height="55dp"
+            android:layout_width="55dp"
+            android:layout_row="2"
+            android:layout_column="3"
+            android:visibility="invisible"
+            android:onClick="drawItem"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"/>
+
+        <ImageButton
+            android:id="@+id/imageButton40"
+            android:layout_height="55dp"
+            android:layout_width="55dp"
+            android:layout_row="2"
+            android:layout_column="4"
+            android:visibility="invisible"
+            android:onClick="drawItem"
+            android:layout_marginBottom="5dp"
+
+        />
+
+        <ImageButton
+            android:id="@+id/imageButton6"
+            android:layout_height="55dp"
+            android:layout_width="55dp"
+            android:layout_row="3"
+            android:layout_column="0"
+            android:visibility="invisible"
+            android:onClick="drawItem"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"/>
+
+        <ImageButton
+            android:id="@+id/imageButton7"
+            android:layout_height="55dp"
+            android:layout_width="55dp"
+            android:layout_row="3"
+            android:layout_column="1"
+            android:visibility="invisible"
+            android:onClick="drawItem"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp" />
+
+        <ImageButton
+            android:id="@+id/imageButton8"
+            android:layout_height="55dp"
+            android:layout_width="55dp"
+            android:layout_row="3"
+            android:layout_column="2"
+            android:visibility="invisible"
+            android:onClick="drawItem"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp" />
+
+        <ImageButton
+            android:id="@+id/imageButton9"
+            android:layout_height="55dp"
+            android:layout_width="55dp"
+            android:layout_row="3"
+            android:layout_column="3"
+            android:visibility="invisible"
+            android:onClick="drawItem"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp" />
+
+        <ImageButton
+            android:id="@+id/imageButton10"
+            android:layout_height="55dp"
+            android:layout_width="55dp"
+            android:layout_row="3"
+            android:layout_column="4"
+            android:visibility="invisible"
+            android:onClick="drawItem"
+            android:layout_marginBottom="5dp"
+             />
+
+        <ImageButton
+            android:id="@+id/imageButton11"
+            android:layout_height="55dp"
+            android:layout_width="55dp"
+            android:layout_row="4"
+            android:layout_column="0"
+            android:visibility="invisible"
+            android:onClick="drawItem"
+            android:layout_marginEnd="5dp" />
+
+        <ImageButton
+            android:id="@+id/imageButton12"
+            android:layout_height="55dp"
+            android:layout_width="55dp"
+            android:layout_row="4"
+            android:layout_column="1"
+            android:visibility="invisible"
+            android:onClick="drawItem"
+            android:layout_marginEnd="5dp"/>
+
+        <ImageButton
+            android:id="@+id/imageButton13"
+            android:layout_height="55dp"
+            android:layout_width="55dp"
+            android:layout_row="4"
+            android:layout_column="2"
+            android:visibility="invisible"
+            android:onClick="drawItem"
+            android:layout_marginEnd="5dp"/>
+
+        <ImageButton
+            android:id="@+id/imageButton14"
+            android:layout_height="55dp"
+            android:layout_width="55dp"
+            android:layout_row="4"
+            android:layout_column="3"
+            android:visibility="invisible"
+            android:onClick="drawItem"
+            android:layout_marginEnd="5dp"/>
+
+        <ImageButton
+            android:id="@+id/imageButton15"
+            android:layout_height="55dp"
+            android:layout_width="55dp"
+            android:layout_row="4"
+            android:layout_column="4"
+            android:visibility="invisible"
+            android:onClick="drawItem"
+          />
+
+
+    </GridLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/wynik1"
+        android:layout_below="@+id/nickGracza"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/wynik2"
+        android:paddingEnd="10dp"
+        android:layout_below="@+id/nickGracza"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>
