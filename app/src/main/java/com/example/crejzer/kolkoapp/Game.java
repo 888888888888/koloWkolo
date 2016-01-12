@@ -228,10 +228,8 @@ public class Game extends Activity {
         }
     }
 
-    //marge czasem zle dziala dla przypadku 2,1,3,4,5 i  3,2,4,5 czyli jedna wstecz i pozniej normalnie caly czas do przodu (liczy wtedy jedna mniej....)
     private void mergeCombination(TreeMap<Integer, Combination> kolekcjaPoziom,
-                                         TreeMap<Integer, Combination> kolekcjaPion) throws NullPointerException {
-
+                                         TreeMap<Integer, Combination> kolekcjaPion, int counterPoziom, int counterPion) throws NullPointerException {
 
         int x;
         int y;
@@ -240,15 +238,15 @@ public class Game extends Activity {
 
         if (kolekcjaPoziom.size() > 0) {
 
-            for (int i = 0; i <= kolekcjaPoziom.size(); i++) {
+            for (int i = 0; i <= counterPoziom; i++) {
 
                 Combination kombinacja = kolekcjaPoziom.get(i);
 
-                for (int j = 0; j <= kolekcjaPoziom.size(); j++) {
+                for (int j = 0; j <= counterPoziom; j++) {
 
                     puste = 999;
 
-					/*trzeba wstawiac wartosc do kolekcji na puste miejsce*/
+					/*trzeba stworzyc funkcje wstawiajaca obiekty na puste miejsca*/
                     if(puste == 999){
 
                         if (i != j) {
@@ -284,7 +282,7 @@ public class Game extends Activity {
             }
         }
 
-			/* wypisywanie */
+        /* wypisywanie uwaga mozliwe bledy*/
         if (kolekcjaPoziom.size() > 0) {
 
             for (int i = 0; i <= kolekcjaPoziom.size(); i++) {
@@ -302,10 +300,10 @@ public class Game extends Activity {
 
         if (kolekcjaPion.size() > 0) {
 
-            for (int i = 0; i <= kolekcjaPion.size(); i++) {
+            for (int i = 0; i <= counterPion; i++) {
 
                 Combination kombinacja = kolekcjaPion.get(i);
-                for (int j = 0; j <= kolekcjaPion.size(); j++) {
+                for (int j = 0; j <= counterPion; j++) {
 
                     if (i != j) {
 
@@ -336,6 +334,8 @@ public class Game extends Activity {
                 }
             }
         }
+
+        /* wypisywanie uwaga mozliwe bledy*/
         if (kolekcjaPion.size() > 0) {
             for (int i = 0; i <= kolekcjaPion.size(); i++) {
 
@@ -425,7 +425,7 @@ public class Game extends Activity {
             counterPion++;
         }
 
-        mergeCombination(kolekcjaPoziom, kolekcjaPion);
+        mergeCombination(kolekcjaPoziom, kolekcjaPion, counterPoziom, counterPion);
 
 		/*
 		 * zpisywanie wartosci lokalnych do wartosci globalnych aby poczas
@@ -587,7 +587,7 @@ public class Game extends Activity {
                     button3Flaga = true;
                 }else {
 
-                    int kierunek = sprawdzPunkty(1,1);
+                    int kierunek = sprawdzPunkty(1,2);
                     Log.d("test", "kierunek "+ String.valueOf(kierunek));
                     usunButton(1, 2, suma, kierunek);
                     dodajPunkty(suma);
