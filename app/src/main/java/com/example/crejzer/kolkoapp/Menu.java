@@ -20,7 +20,7 @@ public class Menu extends Activity {
 
         // Tworzenie przycisku
         GradientDrawable roundedRectangle = (GradientDrawable) this.getResources().getDrawable(R.drawable.rounded_rectangle);
-        Button button = (Button) findViewById(R.id.button1);
+        Button button = (Button) findViewById(R.id.button);
 
         button.setText("OK");
         button.setTextColor(getResources().getColor(R.color.white));

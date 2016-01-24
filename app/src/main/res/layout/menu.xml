@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:weightSum="1"
+    android:orientation="horizontal"
+    android:background="@color/blue"
+    android:id="@+id/menu">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/kvk"
+        android:textSize="90sp"
+        android:id="@+id/textMenu"
+        android:gravity="center_horizontal"/>
+
+    <Button
+        android:layout_below="@id/textMenu"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="playGame"
+        android:id="@+id/button"/>
+
+</RelativeLayout>

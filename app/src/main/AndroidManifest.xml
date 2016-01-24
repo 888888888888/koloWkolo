@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".Menu"
+            android:name=".MenuActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,11 +17,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Menu2"
+            android:name=".PlayerActivity"
             android:label="KolkoApp"
             />
         <activity
-            android:name=".Game"
+            android:name=".SearchActivity"
             android:label="KolkoApp"
             />
     </application>
