@@ -21,7 +21,19 @@
             android:label="KolkoApp"
             />
         <activity
+            android:name=".PlayerActivity2"
+            android:label="KolkoApp"
+            />
+        <activity
             android:name=".SearchActivity"
+            android:label="KolkoApp"
+            />
+        <activity
+            android:name=".SearchActivity2"
+            android:label="KolkoApp"
+            />
+        <activity
+            android:name=".Game"
             android:label="KolkoApp"
             />
     </application>

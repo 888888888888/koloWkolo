@@ -18,8 +18,8 @@ import java.util.TreeMap;
  */
 public class Game extends Activity {
 
-    public static final String EXTRA_MESSAGE = "com.example.crejzer.kolkoapp.Menu";
-    public static final String EXTRA_MESSAGE2 = "com.example.crejzer.kolkoapp.Menu2";
+    private static final String EXTRA_MESSAGE = "com.example.crejzer.kolkoapp.Player";
+    private static final String EXTRA_MESSAGE2 = "com.example.crejzer.kolkoapp.Player2";
 
     private TreeMap<Integer, Combination> kolekcjaPoziom1 = new TreeMap<>();
     private TreeMap<Integer, Combination> kolekcjaPion1 = new TreeMap<>();

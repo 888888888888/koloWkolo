@@ -13,8 +13,6 @@ import android.widget.EditText;
  */
 public class MenuActivity extends Activity {
 
-    private static final String EXTRA_MESSAGE = "com.example.player";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

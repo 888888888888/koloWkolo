@@ -1,6 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/player"
+    android:id="@+id/player2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue"
@@ -15,23 +15,23 @@
         android:layout_height="wrap_content"
         android:text="@string/kvk"
         android:textSize="90sp"
-        android:id="@+id/textPlayer"
+        android:id="@+id/textPlayer2"
         android:gravity="center_horizontal"/>
 
     <EditText
-        android:layout_below="@id/textPlayer"
+        android:layout_below="@id/textPlayer2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:hint="Prosze podac nazwe uzytkownika"
-        android:id="@+id/editPlayer"
+        android:id="@+id/editPlayer2"
         />
 
     <Button
-        android:layout_below="@id/editPlayer"
+        android:layout_below="@id/editPlayer2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:onClick="setPlayer"
         android:visibility="invisible"
-        android:id="@+id/buttonPleyer"/>
+        android:id="@+id/buttonPleyer2"/>
     <!-- android:background="@drawable/button_selector" -->
 </RelativeLayout>

@@ -23,7 +23,7 @@ public class Menu2 extends Activity {
         setContentView(R.layout.activity_menu2);
 
         Intent intent = getIntent();
-        String player1 = intent.getStringExtra(Menu.EXTRA_MESSAGE);
+        String player1 = intent.getStringExtra(EXTRA_MESSAGE);
 
         this.message = player1;
 
