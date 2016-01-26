@@ -8,6 +8,8 @@ import android.util.Log;
 
 import com.example.crejzer.kolkoapp.views.MyProgressBar;
 
+import java.sql.SQLException;
+
 /**
  * Created by Crejzer on 2016-01-25.
  */
@@ -56,6 +58,26 @@ public class SearchActivity2 extends Activity {
 
         @Override
         protected Object doInBackground(Object[] params) {
+
+            DataBase db = new DataBase();
+
+            if(!db.toDB(nick2)){
+
+                Log.d("test", "Uzytkownik juz jest w bazie");
+                try {
+                    db.closeDataBase();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } else {
+
+                Log.d("test", "Nowy użtkownik dodany");
+                try {
+                    db.closeDataBase();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
 
             int jumpTime = 0;
             while(jumpTime < totalProgressTime) {

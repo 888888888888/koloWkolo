@@ -1,16 +1,14 @@
 package com.example.crejzer.kolkoapp;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ProgressBar;
 
 import com.example.crejzer.kolkoapp.views.MyProgressBar;
+
+import java.sql.SQLException;
 
 /**
  * Created by Crejzer on 2015-12-29.
@@ -24,7 +22,7 @@ public class SearchActivity extends Activity {
     private String nick;
     private Intent intent;
 
-    int totalProgressTime = 100;
+    int totalProgressTime = 50;
 
     /** Called when the activity is first created. */
     @Override
@@ -55,6 +53,27 @@ public class SearchActivity extends Activity {
 
         @Override
         protected Object doInBackground(Object[] params) {
+
+            DataBase db = new DataBase();
+
+            if(!db.toDB(nick)){
+
+                Log.d("test", "Uzytkownik juz jest w bazie");
+                try {
+                    db.closeDataBase();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } else {
+
+                Log.d("test", "Nowy użtkownik dodany");
+                try {
+                    db.closeDataBase();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
 
             int jumpTime = 0;
             while(jumpTime < totalProgressTime) {

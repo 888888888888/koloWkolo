@@ -1,14 +1,22 @@
 package com.example.crejzer.kolkoapp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import java.sql.SQLException;
+import java.util.Objects;
 import java.util.TreeMap;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 
 /**
  * Created by Crejzer on 2015-09-15.
@@ -17,6 +25,9 @@ public class Game extends Activity {
 
     private static final String EXTRA_MESSAGE = "com.example.crejzer.kolkoapp.Player";
     private static final String EXTRA_MESSAGE2 = "com.example.crejzer.kolkoapp.Player2";
+
+    private String player1;
+    private String player2;
 
     private TreeMap<Integer, Combination> kolekcjaPoziom1 = new TreeMap<>();
     private TreeMap<Integer, Combination> kolekcjaPion1 = new TreeMap<>();
@@ -1023,7 +1034,7 @@ public class Game extends Activity {
 
         int sumaPoziomo = 0;
         int sumaPionowo = 0;
-        this.suma = 0;
+        suma = 0;
 
         if(tura == 1) {
 
@@ -1110,7 +1121,7 @@ public class Game extends Activity {
         }
     }
 
-    //ogarnac sume na fibonaciego!!!
+
     private void dodajPunkty() {
 
         TextView wynik;
@@ -1146,8 +1157,8 @@ public class Game extends Activity {
 
     public void wyswietlGracza(){
 
-        String player1 = intent.getStringExtra(EXTRA_MESSAGE);
-        String player2 = intent.getStringExtra(EXTRA_MESSAGE2);
+        player1 = intent.getStringExtra(EXTRA_MESSAGE);
+        player2 = intent.getStringExtra(EXTRA_MESSAGE2);
 
         if (tura == 1){
 
@@ -1164,6 +1175,84 @@ public class Game extends Activity {
         nowyObiektPion = true;
 
         buttonLisiner(view);
+        try {
+
+            czyKoniec();
+        } catch (ExecutionException | InterruptedException e){
+
+        }
+
         wyswietlGracza();
+    }
+
+    private void czyKoniec() throws ExecutionException, InterruptedException {
+
+        TextView wynik2 = (TextView) findViewById(R.id.wynik2);
+        TextView wynik1 = (TextView) findViewById(R.id.wynik1);
+
+        if (wynik2.getText() != "") {
+
+            int wynikInt = Integer.valueOf((String) wynik2.getText());
+
+
+            if (wynikInt == 10) {
+
+                String wynik = String.valueOf(new Connector(player2).execute().get());
+                AlertDialog.Builder dialog = new AlertDialog.Builder(this)
+                        .setTitle("Twoje wygrane " + wynik)
+                        .setPositiveButton("Zagraj jeszcze raz", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                System.exit(1);
+                            }
+                        });
+
+                dialog.show();
+
+            }
+        }
+        if (wynik1.getText() != "") {
+
+            int wynikInt = Integer.valueOf((String) wynik1.getText());
+
+            if (wynikInt == 10) {
+
+                String wynik = String.valueOf(new Connector(player1).execute().get());
+                AlertDialog.Builder dialog  = new AlertDialog.Builder(this)
+                        .setTitle("Twoje wygrane " + wynik)
+                        .setPositiveButton("Zagraj jeszcze raz", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                System.exit(1);
+                            }
+                        });
+
+                dialog.show();
+            }
+        }
+    }
+
+    private class Connector extends AsyncTask {
+
+        String player;
+
+        public Connector(String player) {
+            this.player = player;
+        }
+
+        @Override
+        protected Integer doInBackground(Object[] params) {
+
+            DataBase db = new DataBase();
+            db.odczytZBazyDanych(player);
+            Integer wynik = db.getWynik();
+
+            try {
+                db.closeDataBase();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return wynik;
+        }
     }
 }
