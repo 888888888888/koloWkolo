@@ -8,9 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
 import java.util.TreeMap;
 
 /**
@@ -31,10 +28,6 @@ public class Game extends Activity {
     private boolean nowyObiektPion = true;
 
     private int tura = 0;
-
-    //dodac do marge, gdy sie napisze algorytm optymalizacji wykorzystania pamieci
-    // i wstawiania combinacji do kolekcji na puste miejsca
-    private int puste = 999;
 
     Intent intent = null;
     TextView textView = null;
@@ -71,34 +64,8 @@ public class Game extends Activity {
 
     private int suma = 0;
 
-    private boolean buttonFlaga = false;
-    private boolean button2Flaga = false;
-    private boolean buttonAFlaga = false;
-    private boolean buttonBFlaga = false;
-    private boolean buttonCFlaga = false;
-    private boolean buttonDFlaga = false;
-    private boolean buttonEFlaga = false;
-    private boolean button3Flaga = false;
-    private boolean button4Flaga = false;
-    private boolean button5Flaga = false;
-    private boolean button6Flaga = false;
-    private boolean button7Flaga = false;
-    private boolean button8Flaga = false;
-    private boolean button9Flaga = false;
-    private boolean button10Flaga = false;
-    private boolean button11Flaga = false;
-    private boolean button12Flaga = false;
-    private boolean button13Flaga = false;
-    private boolean button14Flaga = false;
-    private boolean button15Flaga = false;
-    private boolean button36Flaga = false;
-    private boolean button37Flaga = false;
-    private boolean button38Flaga = false;
-    private boolean button39Flaga = false;
-    private boolean button40Flaga = false;
-
     ImageButton[][] plansza = null;
-
+    boolean[][] buttonFlags = null;
 
     public void buttonCreater(){
 
@@ -205,7 +172,7 @@ public class Game extends Activity {
         imageButton40.setBackgroundColor(Color.TRANSPARENT);
 
         plansza = new ImageButton[][] {{imageButton2,imageButtonB,imageButtonC,imageButtonD,imageButtonE},{imageButtonA,imageButton,imageButton3,imageButton4,imageButton5},{imageButton36,imageButton37,imageButton38,imageButton39,imageButton40},{imageButton6,imageButton7,imageButton8,imageButton9,imageButton10},{imageButton11,imageButton12,imageButton13,imageButton14,imageButton15}};
-
+        buttonFlags = new boolean[][] {{false,false,false,false,false},{false,false,false,false,false},{false,false,false,false,false},{false,false,false,false,false},{false,false,false,false,false}};
     }
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -242,25 +209,25 @@ public class Game extends Activity {
 
                 Combination kombinacja = kolekcjaPoziom.get(i);
 
+                if(kombinacja == null){
+                    continue;
+                }
+
                 for (int j = 0; j <= counterPoziom; j++) {
-
-                    puste = 999;
-
-					/*trzeba stworzyc funkcje wstawiajaca obiekty na puste miejsca*/
-                    if(puste == 999){
 
                         if (i != j) {
 
                             try{
                                 Combination kombinacjaToCheck = kolekcjaPoziom.get(j);
+                                if(kombinacjaToCheck == null){
+                                    continue;
+                                }
                                 xToCheck = kombinacjaToCheck.getHeadX();
                                 yToCheck = kombinacjaToCheck.getHeadY();
                                 y = kombinacja.getKombinajca().get(xToCheck);
                             }catch(NullPointerException e){
 
-                                y = 999;
-                                xToCheck = 9999;
-                                yToCheck = 9999;
+                               continue;
                             }
                             if (y == yToCheck) {
 
@@ -272,12 +239,8 @@ public class Game extends Activity {
 
                                 kombinacja.reset();
                                 kolekcjaPoziom.remove(j);
-                                puste = j;
                             }
                         }
-						/* trzeba zapisac do globala! */
-
-                    }
                 }
             }
         }
@@ -285,7 +248,7 @@ public class Game extends Activity {
         /* wypisywanie uwaga mozliwe bledy*/
         if (kolekcjaPoziom.size() > 0) {
 
-            for (int i = 0; i <= kolekcjaPoziom.size(); i++) {
+            for (int i = 0; i <= counterPion; i++) {
 
                 Combination kombinacje = kolekcjaPoziom.get(i);
 
@@ -303,21 +266,25 @@ public class Game extends Activity {
             for (int i = 0; i <= counterPion; i++) {
 
                 Combination kombinacja = kolekcjaPion.get(i);
+                if(kombinacja == null){
+                    continue;
+                }
+
                 for (int j = 0; j <= counterPion; j++) {
 
                     if (i != j) {
 
                         try {
-
                             Combination kombinacjaToCheck = kolekcjaPion.get(j);
+                            if(kombinacjaToCheck == null){
+                                continue;
+                            }
                             xToCheck = kombinacjaToCheck.getHeadX();
                             yToCheck = kombinacjaToCheck.getHeadY();
                             x = kombinacja.getKombinajca().get(yToCheck);
-                        } catch (NullPointerException e) {
 
-                            x = 999;
-                            xToCheck = 9999;
-                            yToCheck = 9999;
+                        } catch (NullPointerException e) {
+                            continue;
                         }
                         if (x == xToCheck) {
 
@@ -335,16 +302,14 @@ public class Game extends Activity {
             }
         }
 
-        /* wypisywanie uwaga mozliwe bledy*/
         if (kolekcjaPion.size() > 0) {
-            for (int i = 0; i <= kolekcjaPion.size(); i++) {
+            for (int i = 0; i <= counterPion; i++) {
 
                 Combination kombinacje = kolekcjaPion.get(i);
                 try{
                     Log.d("test", (tura + 1) + "Pion: " + (i + 1) + "->" + kombinacje.getLiczbaKombinacji());
                 } catch(NullPointerException e){
 
-                    System.out.println("wolne miejsce na " + i);
                 }
             }
         }
@@ -466,406 +431,406 @@ public class Game extends Activity {
     public void buttonLisiner(View v){
         switch(v.getId()) {
             case R.id.imageButton:
-                if(!buttonFlaga) {
+                if(!buttonFlags[1][1]) {
 
                     stworzObiekt(imageButton);
                     ruch(1, 1);
                     zmianiaTury();
-                    buttonFlaga = true;
+                    buttonFlags[1][1] = true;
                 } else {
 
                     int kierunek = sprawdzPunkty(1,1);
                     Log.d("test", "kierunek " + String.valueOf(kierunek));
                     usunButton(1, 1, suma, kierunek);
-                    dodajPunkty(suma);
-                    buttonFlaga = false;
+                    dodajPunkty();
+                    buttonFlags[1][1] = false;
                     zmianiaTury();
                 }
                 break;
             case R.id.imageButton2:
-                if(!button2Flaga) {
+                if(!buttonFlags[0][0]) {
                     stworzObiekt(imageButton2);
                     ruch(0, 0);
                     zmianiaTury();
-                    button2Flaga = true;
+                    buttonFlags[0][0] = true;
                 } else {
 
                     int kierunek = sprawdzPunkty(0,0);
                     Log.d("test", "kierunek "+ String.valueOf(kierunek));
                     usunButton(0, 0, suma, kierunek);
-                    dodajPunkty(suma);
-                    button2Flaga = false;
+                    dodajPunkty();
+                    buttonFlags[0][0] = false;
                     zmianiaTury();
                 }
                 break;
             case R.id.a:
-                if(!buttonAFlaga) {
+                if(!buttonFlags[1][0]) {
                     stworzObiekt(imageButtonA);
                     ruch(1, 0);
                     zmianiaTury();
-                    buttonAFlaga = true;
+                    buttonFlags[1][0] = true;
                 } else {
 
                     int kierunek = sprawdzPunkty(1,0);
-                    Log.d("test", "kierunek "+ String.valueOf(kierunek));
+                    Log.d("test", "kierunek " + String.valueOf(kierunek));
                     usunButton(1, 0, suma, kierunek);
-                    dodajPunkty(suma);
-                    buttonAFlaga = false;
+                    dodajPunkty();
+                    buttonFlags[1][0]= false;
                     zmianiaTury();
                 }
                 break;
             case R.id.b:
-                if(!buttonBFlaga) {
+                if(!buttonFlags[0][1]) {
                     stworzObiekt(imageButtonB);
                     ruch(0, 1);
                     zmianiaTury();
-                    buttonBFlaga = true;
+                    buttonFlags[0][1] = true;
                 }else {
 
                     int kierunek = sprawdzPunkty(0,1);
                     Log.d("test", "kierunek "+ String.valueOf(kierunek));
                     usunButton(0, 1, suma, kierunek);
-                    dodajPunkty(suma);
-                    buttonBFlaga = false;
+                    dodajPunkty();
+                    buttonFlags[0][1] = false;
                     zmianiaTury();
                 }
                 break;
             case R.id.c:
-                if(!buttonCFlaga) {
+                if(!buttonFlags[0][2]) {
                     stworzObiekt(imageButtonC);
                     ruch(0, 2);
                     zmianiaTury();
-                    buttonCFlaga = true;
+                    buttonFlags[0][2] = true;
                 } else {
 
                     int kierunek = sprawdzPunkty(0,2);
                     Log.d("test", "kierunek "+ String.valueOf(kierunek));
                     usunButton(0, 2, suma, kierunek);
-                    dodajPunkty(suma);
-                    buttonCFlaga = false;
+                    dodajPunkty();
+                    buttonFlags[0][2] = false;
                     zmianiaTury();
                 }
                 break;
             case R.id.d:
-                if(!buttonDFlaga) {
+                if(!buttonFlags[0][3]) {
                     stworzObiekt(imageButtonD);
                     ruch(0, 3);
                     zmianiaTury();
-                    buttonDFlaga = true;
+                    buttonFlags[0][3] = true;
                 } else {
 
                     int kierunek = sprawdzPunkty(0,3);
                     Log.d("test", "kierunek "+ String.valueOf(kierunek));
                     usunButton(0, 3, suma, kierunek);
-                    dodajPunkty(suma);
-                    buttonDFlaga = false;
+                    dodajPunkty();
+                    buttonFlags[0][3] = false;
                     zmianiaTury();
                 }
                 break;
             case R.id.e:
-                if(!buttonEFlaga) {
+                if(!buttonFlags[0][4]) {
                     stworzObiekt(imageButtonE);
                     ruch(0, 4);
                     zmianiaTury();
-                    buttonEFlaga = true;
+                    buttonFlags[0][4] = true;
                 }else {
 
                     int kierunek = sprawdzPunkty(0,4);
                     Log.d("test", "kierunek "+ String.valueOf(kierunek));
                     usunButton(0, 4, suma, kierunek);
-                    dodajPunkty(suma);
-                    buttonEFlaga = false;
+                    dodajPunkty();
+                    buttonFlags[0][4] = false;
                     zmianiaTury();
                 }
                 break;
             case R.id.imageButton3:
-                if(!button3Flaga) {
+                if(!buttonFlags[1][2]) {
 
                     stworzObiekt(imageButton3);
                     ruch(1, 2);
                     zmianiaTury();
-                    button3Flaga = true;
+                    buttonFlags[1][2] = true;
                 }else {
 
                     int kierunek = sprawdzPunkty(1,2);
                     Log.d("test", "kierunek "+ String.valueOf(kierunek));
                     usunButton(1, 2, suma, kierunek);
-                    dodajPunkty(suma);
-                    button3Flaga = false;
+                    dodajPunkty();
+                    buttonFlags[1][2] = false;
                     zmianiaTury();
                 }
                 break;
             case R.id.imageButton4:
-                if(!button4Flaga) {
+                if(!buttonFlags[1][3]) {
 
                     stworzObiekt(imageButton4);
                     ruch(1, 3);
                     zmianiaTury();
-                    button4Flaga = true;
+                    buttonFlags[1][3]= true;
                 }else {
 
                     int kierunek = sprawdzPunkty(1,3);
                     Log.d("test", "kierunek "+ String.valueOf(kierunek));
                     usunButton(1, 3, suma, kierunek);
-                    dodajPunkty(suma);
-                    button4Flaga = false;
+                    dodajPunkty();
+                    buttonFlags[1][3] = false;
                     zmianiaTury();
                 }
                 break;
             case R.id.imageButton5:
-                if(!button5Flaga) {
+                if(!buttonFlags[1][4]) {
                     stworzObiekt(imageButton5);
                     ruch(1, 4);
                     zmianiaTury();
-                    button5Flaga = true;
+                    buttonFlags[1][4] = true;
                 }else {
 
                     int kierunek = sprawdzPunkty(1,4);
-                    Log.d("test", "kierunek "+ String.valueOf(kierunek));
+                    Log.d("test", "kierunek " + String.valueOf(kierunek));
                     usunButton(1, 4, suma, kierunek);
-                    dodajPunkty(suma);
-                    button5Flaga = false;
+                    dodajPunkty();
+                    buttonFlags[1][4]= false;
                     zmianiaTury();
                 }
                 break;
             case R.id.imageButton6:
-                if(!button6Flaga) {
+                if(!buttonFlags[3][0]) {
                     stworzObiekt(imageButton6);
                     ruch(3, 0);
                     zmianiaTury();
-                    button6Flaga = true;
+                    buttonFlags[3][0] = true;
                 }else {
 
                     int kierunek = sprawdzPunkty(3,0);
                     Log.d("test", "kierunek "+ String.valueOf(kierunek));
                     usunButton(3, 0, suma, kierunek);
-                    dodajPunkty(suma);
-                    button6Flaga = false;
+                    dodajPunkty();
+                    buttonFlags[3][0] = false;
                     zmianiaTury();
                 }
                 break;
             case R.id.imageButton7:
-                if(!button7Flaga) {
+                if(!buttonFlags[3][1]) {
                     stworzObiekt(imageButton7);
                     ruch(3, 1);
                     zmianiaTury();
-                    button7Flaga = true;
+                    buttonFlags[3][1] = true;
                 }else {
 
                     int kierunek = sprawdzPunkty(3,1);
                     Log.d("test", "kierunek "+ String.valueOf(kierunek));
                     usunButton(3, 1, suma, kierunek);
-                    dodajPunkty(suma);
-                    button7Flaga = false;
+                    dodajPunkty();
+                    buttonFlags[3][1] = false;
                     zmianiaTury();
                 }
                 break;
             case R.id.imageButton8:
-                if(!button8Flaga) {
+                if(!buttonFlags[3][2]) {
 
                     stworzObiekt(imageButton8);
                     ruch(3, 2);
                     zmianiaTury();
-                    button8Flaga = true;
+                    buttonFlags[3][2] = true;
                 }else {
 
                     int kierunek = sprawdzPunkty(3,2);
                     Log.d("test", "kierunek "+ String.valueOf(kierunek));
                     usunButton(3, 2, suma, kierunek);
-                    dodajPunkty(suma);
-                    button8Flaga = false;
+                    dodajPunkty();
+                    buttonFlags[3][2] = false;
                     zmianiaTury();
                 }
                 break;
             case R.id.imageButton9:
-                if(!button9Flaga) {
+                if(!buttonFlags[3][3]) {
                     stworzObiekt(imageButton9);
                     ruch(3, 3);
                     zmianiaTury();
-                    button9Flaga = true;
+                    buttonFlags[3][3] = true;
                 }else {
 
                     int kierunek = sprawdzPunkty(3,3);
                     Log.d("test", "kierunek "+ String.valueOf(kierunek));
                     usunButton(3, 3, suma, kierunek);
-                    dodajPunkty(suma);
-                    button9Flaga = false;
+                    dodajPunkty();
+                    buttonFlags[3][3] = false;
                     zmianiaTury();
                 }
                 break;
             case R.id.imageButton10:
-                if(!button10Flaga) {
+                if(!buttonFlags[3][4]) {
                     stworzObiekt(imageButton10);
                     ruch(3, 4);
                     zmianiaTury();
-                    button10Flaga = true;
+                    buttonFlags[3][4] = true;
                 }else {
 
                     int kierunek = sprawdzPunkty(3,4);
                     Log.d("test", "kierunek "+ String.valueOf(kierunek));
                     usunButton(3, 4, suma, kierunek);
-                    dodajPunkty(suma);
-                    button10Flaga = false;
+                    dodajPunkty();
+                    buttonFlags[3][4] = false;
                     zmianiaTury();
                 }
                 break;
             case R.id.imageButton11:
-                if(!button11Flaga) {
+                if(!buttonFlags[4][0]) {
                     stworzObiekt(imageButton11);
                     ruch(4, 0);
                     zmianiaTury();
-                    button11Flaga = true;
+                    buttonFlags[4][0] = true;
                 }else {
 
                     int kierunek = sprawdzPunkty(4,0);
                     Log.d("test", "kierunek "+ String.valueOf(kierunek));
                     usunButton(4, 0, suma, kierunek);
-                    dodajPunkty(suma);
-                    button11Flaga = false;
+                    dodajPunkty();
+                    buttonFlags[4][0] = false;
                     zmianiaTury();
                 }
                 break;
             case R.id.imageButton12:
-                if(!button12Flaga) {
+                if(!buttonFlags[4][1]) {
                     stworzObiekt(imageButton12);
                     ruch(4, 1);
                     zmianiaTury();
-                    button12Flaga = true;
+                    buttonFlags[4][1] = true;
                 }else {
 
                     int kierunek = sprawdzPunkty(4,1);
                     Log.d("test", "kierunek "+ String.valueOf(kierunek));
                     usunButton(4, 1, suma, kierunek);
-                    dodajPunkty(suma);
-                    button12Flaga = false;
+                    dodajPunkty();
+                    buttonFlags[4][1] = false;
                     zmianiaTury();
                 }
                 break;
             case R.id.imageButton13:
-                if(!button13Flaga) {
+                if(!buttonFlags[4][2]) {
                     stworzObiekt(imageButton13);
                     ruch(4, 2);
                     zmianiaTury();
-                    button13Flaga = true;
+                    buttonFlags[4][2] = true;
                 }else {
 
                     int kierunek = sprawdzPunkty(4,2);
                     Log.d("test", "kierunek "+ String.valueOf(kierunek));
                     usunButton(4, 2, suma, kierunek);
-                    dodajPunkty(suma);
-                    button13Flaga = false;
+                    dodajPunkty();
+                    buttonFlags[4][2] = false;
                     zmianiaTury();
                 }
                 break;
             case R.id.imageButton14:
-                if(!button14Flaga) {
+                if(!buttonFlags[4][3]) {
                     stworzObiekt(imageButton14);
                     ruch(4, 3);
                     zmianiaTury();
-                    button14Flaga = true;
+                    buttonFlags[4][3] = true;
                 }else {
 
                     int kierunek = sprawdzPunkty(4,3);
                     Log.d("test", "kierunek "+ String.valueOf(kierunek));
                     usunButton(4, 3, suma, kierunek);
-                    dodajPunkty(suma);
-                    button14Flaga = false;
+                    dodajPunkty();
+                    buttonFlags[4][3] = false;
                     zmianiaTury();
                 }
                 break;
             case R.id.imageButton15:
-                if(!button15Flaga) {
+                if(!buttonFlags[4][4]) {
                     stworzObiekt(imageButton15);
                     ruch(4, 4);
                     zmianiaTury();
-                    button15Flaga = true;
+                    buttonFlags[4][4] = true;
                 }else {
 
                     int kierunek = sprawdzPunkty(4,4);
                     Log.d("test", "kierunek "+ String.valueOf(kierunek));
                     usunButton(4, 4, suma, kierunek);
-                    dodajPunkty(suma);
-                    button15Flaga = false;
+                    dodajPunkty();
+                    buttonFlags[4][4] = false;
                     zmianiaTury();
                 }
                 break;
             case R.id.imageButton36:
-                if(!button36Flaga) {
+                if(!buttonFlags[2][0]) {
                     stworzObiekt(imageButton36);
                     ruch(2, 0);
                     zmianiaTury();
-                    button36Flaga = true;
+                    buttonFlags[2][0] = true;
                 }else {
 
                     int kierunek = sprawdzPunkty(2,0);
                     Log.d("test", "kierunek "+ String.valueOf(kierunek));
                     usunButton(2, 0, suma, kierunek);
-                    dodajPunkty(suma);
-                    button36Flaga = false;
+                    dodajPunkty();
+                    buttonFlags[2][0] = false;
                     zmianiaTury();
                 }
                 break;
             case R.id.imageButton37:
-                if(!button37Flaga) {
+                if(!buttonFlags[2][1]) {
                     stworzObiekt(imageButton37);
                     ruch(2, 1);
                     zmianiaTury();
-                    button37Flaga = true;
+                    buttonFlags[2][1] = true;
                 }else {
 
                     int kierunek = sprawdzPunkty(2,1);
                     Log.d("test", "kierunek "+ String.valueOf(kierunek));
                     usunButton(2, 1, suma, kierunek);
-                    dodajPunkty(suma);
-                    button37Flaga = false;
+                    dodajPunkty();
+                    buttonFlags[2][1] = false;
                     zmianiaTury();
                 }
                 break;
             case R.id.imageButton38:
-                if(!button38Flaga) {
+                if(!buttonFlags[2][2]) {
                     stworzObiekt(imageButton38);
                     ruch(2, 2);
                     zmianiaTury();
-                    button38Flaga = true;
+                    buttonFlags[2][2] = true;
                 }else {
 
                     int kierunek = sprawdzPunkty(2,2);
                     Log.d("test", "kierunek "+ String.valueOf(kierunek));
                     usunButton(2, 2, suma, kierunek);
-                    dodajPunkty(suma);
-                    button38Flaga = false;
+                    dodajPunkty();
+                    buttonFlags[2][2] = false;
                     zmianiaTury();
                 }
                 break;
             case R.id.imageButton39:
-                if(!button39Flaga) {
+                if(!buttonFlags[2][3]) {
                     stworzObiekt(imageButton39);
                     ruch(2, 3);
                     zmianiaTury();
-                    button39Flaga = true;
+                    buttonFlags[2][3] = true;
                 }else {
 
                     int kierunek = sprawdzPunkty(2,3);
                     Log.d("test", "kierunek "+ String.valueOf(kierunek));
                     usunButton(2, 3, suma, kierunek);
-                    dodajPunkty(suma);
-                    button39Flaga = false;
+                    dodajPunkty();
+                    buttonFlags[2][3] = false;
                     zmianiaTury();
                 }
                 break;
             case R.id.imageButton40:
-                if(!button40Flaga) {
+                if(!buttonFlags[2][4]) {
                     stworzObiekt(imageButton40);
                     ruch(2, 4);
                     zmianiaTury();
-                    button40Flaga = true;
+                    buttonFlags[2][4] = true;
                 }else {
 
                     int kierunek = sprawdzPunkty(2,4);
                     Log.d("test", "kierunek "+ String.valueOf(kierunek));
                     usunButton(2,4, suma, kierunek);
-                    dodajPunkty(suma);
-                    buttonFlaga = false;
+                    dodajPunkty();
+                    buttonFlags[2][4] = false;
                     zmianiaTury();
                 }
                 break;
@@ -879,15 +844,181 @@ public class Game extends Activity {
 
         if (suma > 1){
             if(kierunek == 0) {
+
+                usunKolekcjePoziom(x, y);
                 for (int i = 1; i <= suma - 1; i++) {
                     button = plansza[x][y+ i];
+                    buttonFlags[x][y+i] = false;
+                    button.setBackgroundColor(Color.TRANSPARENT);
+                }
+            } else {
+
+                usunKolekcjePion(x,y);
+                for (int j = 1; j <= suma - 1; j++){
+
+                    button = plansza[x+j][y];
+                    buttonFlags[x+j][y] = false;
                     button.setBackgroundColor(Color.TRANSPARENT);
                 }
             }
         }
     }
 
-    // marge psuje dodawanie pkt!!!! wysakuja nulle i przez to suma wychodzi 0
+    private void usunKolekcjePoziom(int x, int y) {
+
+        Combination kolekcja;
+        Combination kolekcjaPionToCheck;
+
+        if(tura == 1) {
+
+            for (int i = 0; i < counterPoziom1; i++) {
+
+                try {
+
+                    kolekcja = kolekcjaPoziom1.get(i);
+                    if (kolekcja.getHeadX() == x) {
+                        if (kolekcja.getHeadY() == y) {
+
+                            for(int j = 0; j < counterPion1; j++) {
+
+                                kolekcjaPionToCheck = kolekcjaPion1.get(j);
+                                Log.d("test", "Kolekcja y = " + kolekcjaPionToCheck.getHeadY());
+                                if(kolekcjaPionToCheck.getHeadX() == x){
+                                    for(int k = 0; k < suma; k++) {
+                                        Log.d("test", "Sprawdzam head = " + (y+k));
+                                        if (kolekcjaPionToCheck.getHeadY() == (y+k)) {
+                                            kolekcjaPion1.remove(j);
+                                            Log.d("test", (tura + 1) + " Usuneto kolekcje poion " + i);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+
+                            kolekcjaPoziom1.remove(i);
+                            Log.d("test", (tura + 1) + " Usuneto kolekcje poziom " + i);
+                        }
+                    }
+
+                } catch (NullPointerException e) {
+
+                }
+            }
+        } else {
+
+            for(int i = 0; i < counterPoziom2; i++) {
+
+                try{
+
+                    kolekcja = kolekcjaPoziom2.get(i);
+                    if(kolekcja.getHeadX() == x){
+                        if(kolekcja.getHeadY() == y){
+                            for(int j = 0; j < counterPion2; j++) {
+
+                                kolekcjaPionToCheck = kolekcjaPion2.get(j);
+                                Log.d("test", "Kolekcja y = " + kolekcjaPionToCheck.getHeadY());
+                                if(kolekcjaPionToCheck.getHeadX() == x){
+                                    for(int k = 0; k < suma; k++) {
+                                        Log.d("test", "Sprawdzam head = " + (y+k));
+                                        if (kolekcjaPionToCheck.getHeadY() == (y+k)) {
+                                            kolekcjaPion2.remove(j);
+                                            Log.d("test", (tura + 1) + " Usuneto kolekcje poion " + i);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+
+                            kolekcjaPoziom2.remove(i);
+                            Log.d("test", (tura + 1) + " Usuneto kolekcje poziom " + i);
+                        }
+                    }
+
+                }catch (NullPointerException e){
+
+                }
+            }
+        }
+    }
+
+    private void usunKolekcjePion(int x, int y) {
+
+        Combination kolekcja;
+        Combination kolekcjaPoziomToCheck;
+
+        if(tura == 1) {
+
+            for (int i = 0; i <= kolekcjaPion1.size(); i++) {
+
+                try {
+
+                    kolekcja = kolekcjaPion1.get(i);
+                    if (kolekcja.getHeadX() == x) {
+                        if (kolekcja.getHeadY() == y) {
+
+                            for(int j = 0; j < counterPoziom1; j++) {
+
+                                kolekcjaPoziomToCheck = kolekcjaPoziom1.get(j);
+                                Log.d("test", "Kolekcja x = " + kolekcjaPoziomToCheck.getHeadX());
+                                if(kolekcjaPoziomToCheck.getHeadY() == y){
+                                    for(int k = 0; k < suma; k++) {
+                                        Log.d("test", "Sprawdzam head = " + (x+k));
+                                        if (kolekcjaPoziomToCheck.getHeadX() == (x+k)) {
+                                            kolekcjaPoziom1.remove(j);
+                                            Log.d("test", (tura + 1) + " Usuneto kolekcje poziom " + i);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+
+                            kolekcjaPion1.remove(i);
+                            Log.d("test", (tura + 1) + " Usuneto kolekcje pion " + i);
+                        }
+                    }
+
+                } catch (NullPointerException e) {
+
+                }
+            }
+        } else {
+
+            for(int i = 0; i <= kolekcjaPion2.size(); i++) {
+
+                try{
+
+                    kolekcja = kolekcjaPion2.get(i);
+                    if(kolekcja.getHeadX() == x){
+                        if(kolekcja.getHeadY() == y){
+
+                            for(int j = 0; j < counterPoziom2; j++) {
+
+                                kolekcjaPoziomToCheck = kolekcjaPoziom2.get(j);
+                                Log.d("test", "Kolekcja x = " + kolekcjaPoziomToCheck.getHeadX());
+                                if(kolekcjaPoziomToCheck.getHeadY() == y){
+                                    for(int k = 0; k < suma; k++) {
+                                        Log.d("test", "Sprawdzam head = " + (x+k));
+                                        if (kolekcjaPoziomToCheck.getHeadX() == (x+k)) {
+                                            kolekcjaPoziom2.remove(j);
+                                            Log.d("test", (tura + 1) + " Usuneto kolekcje poziom " + i);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+
+                            kolekcjaPion2.remove(i);
+                            Log.d("test", (tura + 1) + " Usuneto kolekcje pion " + i);
+                        }
+                    }
+
+                }catch (NullPointerException e){
+
+                }
+            }
+        }
+    }
+
     private int sprawdzPunkty(int x, int y) {
 
         int sumaPoziomo = 0;
@@ -903,6 +1034,7 @@ public class Game extends Activity {
                     Combination kolekcja = kolekcjaPoziom1.get(i);
                     if(kolekcja.getHeadX() == x){
                         if(kolekcja.getHeadY() == y){
+
                             sumaPoziomo = kolekcja.getLiczbaKombinacji();
                             Log.d("test", (tura+1)+" dla x ="+x+" y="+y+" liczba kom poziomo to "+ sumaPoziomo);
                         }
@@ -920,6 +1052,7 @@ public class Game extends Activity {
                     Combination kolekcja = kolekcjaPion1.get(i);
                     if(kolekcja.getHeadX() == x){
                         if(kolekcja.getHeadY() == y){
+
                             sumaPionowo = kolekcja.getLiczbaKombinacji();
                             Log.d("test", (tura+1)+" dla x ="+x+" y="+y+" liczba kom pionowo to "+sumaPionowo);
                         }
@@ -978,7 +1111,7 @@ public class Game extends Activity {
     }
 
     //ogarnac sume na fibonaciego!!!
-    private void dodajPunkty(int suma) {
+    private void dodajPunkty() {
 
         TextView wynik;
 
